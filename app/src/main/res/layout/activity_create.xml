@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="com.yuri.keepass.CreateActivity">
+
+    <TextView
+        android:id="@+id/tv_input_hit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请输入数据库名称(不需要写扩展名)"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/et_db_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="数据库文件名称"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_input_hit"
+        tools:layout_editor_absoluteY="101dp"
+        />
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="下一步"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_db_name_input"
+        android:onClick="onNextButtonClick"
+        />
+
+    <android.support.constraint.Group
+        android:id="@+id/create_group1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_input_hit,et_db_name_input,btn_next"
+        android:visibility="visible"
+        />
+
+    <TextView
+        android:id="@+id/tv_pw_setting_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="数据库密码设置"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/et_pw_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="密码"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pw_setting_tip"
+        tools:layout_editor_absoluteY="101dp"
+        />
+
+    <EditText
+        android:id="@+id/et_pw_set_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="确认密码"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_pw_set"
+        tools:layout_editor_absoluteY="101dp"
+        />
+
+    <EditText
+        android:id="@+id/et_pw_set_file_path"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:hint="密钥文件"
+        android:focusable="false"
+        android:clickable="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_pw_set_confirm"
+        app:layout_constraintEnd_toStartOf="@+id/btn_open_pw_file"
+        />
+
+    <Button
+        android:id="@+id/btn_open_pw_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_pw_set_confirm"
+        android:text="打开"
+        android:onClick="onOpenFileClick"
+        />
+
+    <Button
+        android:id="@+id/btn_next2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="完成"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_open_pw_file"
+        android:onClick="onCompleteButtonClick"
+        />
+
+    <Button
+        android:id="@+id/btn_pre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:text="上一步"
+        app:layout_constraintEnd_toStartOf="@+id/btn_next2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_next2"
+        android:onClick="onPreButtonClick"
+        />
+
+    <android.support.constraint.Group
+        android:id="@+id/create_group2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tv_pw_setting_tip,et_pw_set,et_pw_set_confirm,et_pw_set_file_path,btn_open_pw_file,btn_next2,btn_pre"
+        android:visibility="gone"
+        />
+
+</android.support.constraint.ConstraintLayout>

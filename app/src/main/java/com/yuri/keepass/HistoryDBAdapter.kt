@@ -18,7 +18,7 @@ class HistoryDBAdapter : RecyclerView.Adapter<HistoryDBAdapter.MyViewHolder> {
         this.dataList = list
     }
 
-    fun setDataList(list: ArrayList<HistoryFile>) {
+    fun setDataList(list: List<HistoryFile>) {
         dataList = list
         notifyDataSetChanged()
     }
@@ -29,11 +29,12 @@ class HistoryDBAdapter : RecyclerView.Adapter<HistoryDBAdapter.MyViewHolder> {
     }
 
     override fun getItemCount(): Int {
-        return dataList?.size!!
+        //第一个问号表示dataList为null是返回null，第二个问号则当dataLIst为null时直接返回0
+        return dataList?.size?:0
     }
 
     override fun onBindViewHolder(holder: MyViewHolder?, position: Int) {
-        val item = dataList!!.get(position)
+        val item = dataList!![position]
         holder!!.nameView.text = item.name
         holder.pathView.text = item.path
     }
@@ -45,6 +46,10 @@ class HistoryDBAdapter : RecyclerView.Adapter<HistoryDBAdapter.MyViewHolder> {
         init {
             nameView = itemView!!.findViewById(R.id.tv_item_history_name)
             pathView = itemView.findViewById(R.id.tv_item_history_path)
+
+            itemView.setOnClickListener {
+
+            }
         }
     }
 
