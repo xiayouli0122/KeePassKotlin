@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
 import com.leon.lfilepickerlibrary.LFilePicker
@@ -15,15 +14,11 @@ import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.Permission
 import com.yanzhenjie.permission.Rationale
 import com.yuri.keepass.model.HistoryFile
+import com.yuri.xlog.XLog
 import io.objectbox.BoxStore
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
-import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
-
-    private val TAG = MainActivity::class.java.simpleName
-
     private var adapter:HistoryDBAdapter? = null
 
     private lateinit var boxStore: BoxStore
@@ -48,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     private fun getData() {
         val boxFor = boxStore.boxFor(HistoryFile::class.java)
         val list:List<HistoryFile> = boxFor.query().build().find()
-        Log.d(TAG, "size=" + list.size)
+        XLog.d("size=" + list.size)
         adapter!!.setDataList(list)
     }
 
@@ -78,10 +73,10 @@ class MainActivity : AppCompatActivity() {
                 .permission(Permission.Group.STORAGE)
                 .rationale(mRationale)
                 .onGranted {
-                    Log.d("Yuri", "权限授予成功")
+                    XLog.d("权限授予成功")
                 }
                 .onDenied {
-                    Log.d("Yuri", "权限授予失败")
+                    XLog.d("权限授予失败")
                     //权限授予失败
                     if (AndPermission.hasAlwaysDeniedPermission(this, it)) {
                         //用户总是拒绝授予权限
@@ -92,12 +87,10 @@ class MainActivity : AppCompatActivity() {
                                 .negativeText("取消")
                                 .cancelable(false)
                                 .onPositive { dialog, which ->
-                                    Log.d("Yuri", "OK")
                                     AndPermission.permissionSetting(this).execute()
                                     this.finish()
                                 }
                                 .onNegative { dialog, which ->
-                                    Log.w("Yuri", "Fail")
                                     MainActivity@ this.finish()
                                 }
                                 .show()
@@ -117,11 +110,9 @@ class MainActivity : AppCompatActivity() {
                 .negativeText("取消")
                 .cancelable(false)
                 .onPositive { dialog, which ->
-                    Log.d("Yuri", "OK")
                     executor.execute()
                 }
                 .onNegative { dialog, which ->
-                    Log.w("Yuri", "Fail")
                     executor.cancel()
                     MainActivity@this.finish()
                 }
@@ -138,8 +129,8 @@ class MainActivity : AppCompatActivity() {
             val list = data?.getStringArrayListExtra(Constant.RESULT_INFO)
             if (list != null) {
                 val path = list.get(0)
-                Log.d("Yuri", "path=" + path)
-
+                XLog.d("path:" + path)
+                
             }
         }
     }
