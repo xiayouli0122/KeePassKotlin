@@ -5,16 +5,27 @@ import android.os.Handler
 import android.widget.Toast
 
 /**
- * 在一个任务完成后回调
+ * 在一个任务完成后回调，支持多层任务回调
  * Created by Yuri on 2018/4/16.
  */
 
-class OnFinishTask() : Runnable {
+open class OnFinishTask() : Runnable {
 
+    /**
+     * 任务完成状态标记（成功还是失败）
+     */
     protected var mSuccess: Boolean = false
+    /**
+     * 任务完成后需要给调用者传递的消息内容
+     */
     protected var mMessage: String? = ""
-
+    /**
+     * Task执行完毕后的回调
+     */
     protected var mOnFinish: OnFinishTask? = null
+    /**
+     * Handler 用于子线程跟主线程之间转换
+     */
     protected var mHandler: Handler? = null
 
     constructor(handler: Handler) : this() {

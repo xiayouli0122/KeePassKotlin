@@ -39,7 +39,7 @@ class HistoryDBAdapter : RecyclerView.Adapter<HistoryDBAdapter.MyViewHolder> {
         holder.pathView.text = item.path
     }
 
-    class MyViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
         var nameView:TextView
         var pathView:TextView
@@ -48,9 +48,19 @@ class HistoryDBAdapter : RecyclerView.Adapter<HistoryDBAdapter.MyViewHolder> {
             pathView = itemView.findViewById(R.id.tv_item_history_path)
 
             itemView.setOnClickListener {
-
+                val historyFile = dataList?.get(layoutPosition)
+                listener.onItemClick(historyFile!!)
             }
         }
+    }
+
+    private lateinit var listener: onItemClickListener
+    public fun setOnItemClickListener(listener: onItemClickListener) {
+        this.listener = listener
+    }
+
+    public interface onItemClickListener {
+        fun onItemClick(historyFile: HistoryFile)
     }
 
 }

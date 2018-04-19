@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -14,11 +15,14 @@ import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.Permission
 import com.yanzhenjie.permission.Rationale
 import com.yuri.keepass.model.HistoryFile
+import com.yuri.keepass.utils.LoadDbTask
+import com.yuri.keepass.utils.OnFinishTask
+import com.yuri.keepass.utils.ProgressTask
 import com.yuri.xlog.XLog
 import io.objectbox.BoxStore
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HistoryDBAdapter.onItemClickListener {
     private var adapter:HistoryDBAdapter? = null
 
     private lateinit var boxStore: BoxStore
@@ -31,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter = HistoryDBAdapter(this, null)
         rv_db_history.adapter = adapter
+        adapter!!.setOnItemClickListener(this)
 
         val application = application as MyApplication
         boxStore = application.getBoxStore()
@@ -130,8 +135,35 @@ class MainActivity : AppCompatActivity() {
             if (list != null) {
                 val path = list.get(0)
                 XLog.d("path:" + path)
-                
+
+                startLoadDb()
+
             }
+        }
+    }
+
+    private fun startLoadDb() {
+        XLog.d()
+        //创建一个Task
+        val loadTask = LoadDbTask(this, "load db task", AfterLoad(Handler()))
+
+        //添加到ProgressTask，开始干活
+        val progressTask = ProgressTask(this, loadTask, "请稍后...")
+        progressTask.run()
+    }
+
+    override fun onItemClick(historyFile: HistoryFile) {
+        startLoadDb()
+    }
+
+    private inner class AfterLoad : OnFinishTask {
+        constructor(handler: Handler) : super(handler) {
+
+        }
+
+        override fun run() {
+            XLog.d("AfterLoad.run:" + mMessage)
+//            displayMessage(applicationContext)
         }
     }
 

@@ -1,6 +1,5 @@
 package com.yuri.keepass.utils
 
-import android.app.ProgressDialog
 import android.os.Handler
 import com.afollestad.materialdialogs.MaterialDialog
 
@@ -9,7 +8,6 @@ import com.afollestad.materialdialogs.MaterialDialog
  * Created by Yuri on 2018/4/16.
  */
 class UpdateStatus(handler: Handler, progressDialog: MaterialDialog) {
-    private lateinit var mPD: ProgressDialog
     private var mProgressDialog : MaterialDialog = progressDialog
     private var mHandler: Handler = handler
 
